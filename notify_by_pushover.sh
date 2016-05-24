@@ -42,6 +42,32 @@
 # 	Example:
 #	./notify_by_pushover.sh -u r5j7mjYjd -a noZ9KuR5T -s 'spacealarm' -t "server.pretendco.com" -m "DISK WARNING - free space: /dev/disk0s2 4784 MB"
 
+#       Nagios command config example
+#define command {
+#       command_name notify-host-by-pushover
+#       command_line /usr/local/bin/notify_by_pushover.sh -u "$_CONTACTPUSHOVER_USERKEY$" -a "$_CONTACTPUSHOVER_APPKEY$" -c "siren" -w "spacealarm" -o "magic" -t "$HOSTNAME$ is $HOSTSTATE$" -m "Status: $HOSTOUTPUT$"
+#}
+
+#define command {
+#       command_name notify-service-by-pushover
+#       command_line /usr/local/bin/notify_by_pushover.sh -u "$_CONTACTPUSHOVER_USERKEY$" -a "$_CONTACTPUSHOVER_APPKEY$" -c "siren" -w "spacealarm" -o "magic" -t "$SERVICEDESC$ on $HOSTNAME$ is $SERVICESTATE$" -m "Status: $SERVICEOUTPUT$"
+#}
+
+#define contact {
+#  contact_name                   paulb-pushover
+#  alias                          paulb pushover notifications
+#  use                            generic-contact
+#  service_notification_period    24x7
+#  host_notification_period       24x7
+#  service_notification_options   u,c,r
+#  host_notification_options      d,u,r
+#  service_notification_commands  notify-service-by-pushover
+#  host_notification_commands     notify-host-by-pushover
+#  _pushover_userkey              xxxx
+#  _pushover_appkey               yyyy
+#  _pushover_device               iphone-paulb
+#}
+
 
 while getopts "u:a:t:m:p:s:w:c:o:" optionName; do
 case "$optionName" in
